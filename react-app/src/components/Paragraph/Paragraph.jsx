@@ -1,7 +1,7 @@
 import "./Paragraph.css";
 
-function Paragraph({ text }) {
+const Paragraph = ({ text }) => {
   return <p className="paragraph">{text}</p>;
-}
+};
 
 export default Paragraph;
