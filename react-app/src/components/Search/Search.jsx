@@ -11,7 +11,7 @@ const Search = ({ placeholder, svg = false }) => {
     <div className="search-block">
       <img
         className={svg ? "search-svg" : "no-search-svg"}
-        src="search.svg"
+        src="/public/svg/search.svg"
         alt=""
       />
       <input

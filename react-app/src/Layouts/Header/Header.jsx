@@ -3,7 +3,7 @@ import "./Header.css";
 const Header = () => {
   return (
     <div className="header">
-      <img className="logo" src="logo.svg" alt="logo" />
+      <img className="logo" src="/public/svg/logo.svg" alt="logo" />
       <nav className="menu">
         <ul className="menu-list">
           <li className="menu-item">

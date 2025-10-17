@@ -1,4 +1,7 @@
 .paragraph {
+  width: 50%;
+  margin: 0;
+  margin-bottom: 25px;
   font-family: Poppins;
   font-weight: 400;
   font-size: 16px;
