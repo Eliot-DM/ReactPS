@@ -1,33 +1,31 @@
-.search {
+.input {
   padding: 12px 16px;
   width: 350px;
   height: 40px;
   background-color: rgba(0, 255, 255, 0);
   border-radius: 12px;
   border: 1px solid #323b54;
+  color: #c2c8d7;
 }
 
-.search ::placeholder {
+.input::placeholder {
   font-family: Poppins;
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  background: #475069;
+  color: #475069;
 }
 
-.search-svg {
+.svg {
   top: 20px;
   left: 16px;
   position: absolute;
 }
-.no-search-svg {
-  display: none;
-}
 
-.search-block {
+.search {
   position: relative;
 }
 
-.search-p {
+.inputSearch {
   padding-left: 55px;
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./Search.css";
+import styles from "./Search.module.css";
+import cn from "classnames";
 
 const Search = ({ placeholder, svg = false }) => {
   const [inputDate, setInputDate] = useState("");
@@ -8,14 +9,14 @@ const Search = ({ placeholder, svg = false }) => {
     console.log(inputDate);
   };
   return (
-    <div className="search-block">
-      <img
-        className={svg ? "search-svg" : "no-search-svg"}
-        src="/public/svg/search.svg"
-        alt=""
-      />
+    <div className={styles.search}>
+      {svg && (
+        <img className={styles.svg} src="/public/svg/search.svg" alt="" />
+      )}
       <input
-        className={svg ? "search search-p" : "search"}
+        className={cn(styles.input, {
+          [styles.inputSearch]: svg,
+        })}
         placeholder={placeholder}
         type="text"
         value={inputDate}

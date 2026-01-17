@@ -12,24 +12,24 @@
   align-items: center;
 }
 
-.menu-list {
+.menuList {
   display: flex;
   list-style: none;
 }
 
-.menu-item {
+.menuItem {
   margin-left: 16px;
   padding: 12px;
 }
 
-.menu-link {
+.menuLink {
   font-family: Poppins;
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
 }
 
-.link-login {
+.linkLogin {
   position: relative;
   padding-right: 40px;
 }

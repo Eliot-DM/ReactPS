@@ -12,7 +12,7 @@
   background: #000000a6;
   border-radius: 12px;
 }
-.star-text {
+.star_text {
   margin: 0;
   font-family: Poppins;
   font-weight: 400;
@@ -21,15 +21,15 @@
   color: #ffad49;
 }
 
-.block-link {
+.block_link {
   display: flex;
 }
 
-.star-svg {
+.star_svg {
   padding-right: 4px;
 }
 
-.card-title {
+.card_title {
   margin: 0;
   margin-bottom: 15px;
   font-family: Poppins;
@@ -42,7 +42,7 @@
   margin-bottom: 15px;
 }
 
-.like-svg {
+.like_svg {
   margin-right: 8px;
 }
 

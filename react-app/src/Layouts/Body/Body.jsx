@@ -1,10 +1,9 @@
-import Card from "../../components/card/card";
 import CardList from "../../components/CardList/CardList";
-import "./Body.css";
+import styles from "./Body.module.css";
 
 const Body = ({ data }) => {
   return (
-    <div className="body">
+    <div className={styles.body}>
       <CardList data={data} />
     </div>
   );
