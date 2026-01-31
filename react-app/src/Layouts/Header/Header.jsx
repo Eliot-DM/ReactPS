@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 
-const Header = () => {
+const Header = (user) => {
   return (
     <div className={styles.header}>
       <img className={styles.logo} src="/public/svg/logo.svg" alt="logo" />
@@ -18,7 +18,7 @@ const Header = () => {
           </li>
           <li className={styles.menuItem}>
             <a className={styles.menuLink && styles.linkLogin} href="">
-              Войти
+              {user ? "Войти" : user}
               <img className={styles.login} src="login.svg" alt="login" />
             </a>
           </li>

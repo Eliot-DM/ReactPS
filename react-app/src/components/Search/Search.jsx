@@ -1,13 +1,7 @@
-import { useState } from "react";
 import styles from "./Search.module.css";
 import cn from "classnames";
 
-const Search = ({ placeholder, svg = false }) => {
-  const [inputDate, setInputDate] = useState("");
-  const inputChange = (e) => {
-    setInputDate(e.target.value);
-    console.log(inputDate);
-  };
+const Search = ({ placeholder, svg = false, onChange, value }) => {
   return (
     <div className={styles.search}>
       {svg && (
@@ -19,8 +13,8 @@ const Search = ({ placeholder, svg = false }) => {
         })}
         placeholder={placeholder}
         type="text"
-        value={inputDate}
-        onChange={inputChange}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );
