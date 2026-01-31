@@ -61,7 +61,7 @@ function App() {
     }
   }, []);
 
-  // Сохранение при изменении
+  // Сохранение
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(user));
   }, [user]);
