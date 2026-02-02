@@ -71,7 +71,9 @@ function App() {
   };
 
   const logoutFirstUser = () => {
-    setUser(([...user][0].isLogined = false));
+    const updatedUsers = [...user];
+    updatedUsers[0].isLogined = false;
+    setUser(updatedUsers);
   };
 
   return (
