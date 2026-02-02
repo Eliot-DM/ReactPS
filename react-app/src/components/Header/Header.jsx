@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 
-const Header = ({ user }) => {
+const Header = ({ user, onClick }) => {
   return (
     <div className={styles.header}>
       <img className={styles.logo} src="/public/svg/logo.svg" alt="logo" />
@@ -25,7 +25,7 @@ const Header = ({ user }) => {
                 </a>
               </li>
               <li className={styles.menuItem}>
-                <a className={styles.menuLink} href="">
+                <a className={styles.menuLink} href="" onClick={onClick}>
                   Выйти
                 </a>
               </li>

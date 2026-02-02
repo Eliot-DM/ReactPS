@@ -70,9 +70,13 @@ function App() {
     }
   };
 
+  const logoutFirstUser = () => {
+    setUser(([...user][0].isLogined = false));
+  };
+
   return (
     <>
-      <Header user={user[0].name} />
+      <Header user={user[0]?.name} onClick={logoutFirstUser} />
 
       <Search
         value={name}
