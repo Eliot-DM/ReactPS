@@ -1,6 +1,11 @@
 import styles from "./Header.module.css";
+import { useContext } from "react";
+import { UserContext } from "../../context/user.context";
 
-const Header = ({ user, onClick }) => {
+const Header = ({ onClick }) => {
+  const { name } = useContext(UserContext);
+  console.log(name);
+
   return (
     <div className={styles.header}>
       <img className={styles.logo} src="/public/svg/logo.svg" alt="logo" />
@@ -16,12 +21,16 @@ const Header = ({ user, onClick }) => {
               Мои фильмы
             </a>
           </li>
-          {user ? (
+          {name ? (
             <>
               <li className={styles.menuItem}>
                 <a className={styles.menuLink && styles.linkLogin} href="">
-                  {user}
-                  <img className={styles.login} src="login.svg" alt="login" />
+                  {name}
+                  <img
+                    className={styles.login}
+                    src="/public/svg/login.svg"
+                    alt="login"
+                  />
                 </a>
               </li>
               <li className={styles.menuItem}>

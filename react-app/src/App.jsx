@@ -3,6 +3,7 @@ import Button from "./components/Button/Button";
 import Header from "./components/Header/Header";
 import Search from "./components/Search/Search";
 import { useEffect, useState } from "react";
+import { UserContext } from "./context/user.context";
 
 function App() {
   const [user, setUser] = useState([]);
@@ -78,15 +79,17 @@ function App() {
 
   return (
     <>
-      <Header user={user[0]?.name} onClick={logoutFirstUser} />
+      <UserContext.Provider value={{ name: name }}>
+        <Header onClick={logoutFirstUser} />
 
-      <Search
-        value={name}
-        placeholder={"Ваше имя"}
-        svg={false}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <Button text={"Войти в профиль"} big onClick={saveName}></Button>
+        <Search
+          value={name}
+          placeholder={"Ваше имя"}
+          svg={false}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Button text={"Войти в профиль"} big onClick={saveName}></Button>
+      </UserContext.Provider>
     </>
   );
 }
