@@ -2,9 +2,10 @@ import styles from "./Header.module.css";
 import { useContext } from "react";
 import { UserContext } from "../../context/user.context";
 
-const Header = ({ onClick }) => {
-  const { name } = useContext(UserContext);
-  console.log(name);
+export const Header = () => {
+  const { currentUser, logoutCurrentUser } = useContext(UserContext);
+
+  const userName = currentUser?.name;
 
   return (
     <div className={styles.header}>
@@ -21,11 +22,12 @@ const Header = ({ onClick }) => {
               Мои фильмы
             </a>
           </li>
-          {name ? (
+
+          {userName ? (
             <>
               <li className={styles.menuItem}>
-                <a className={styles.menuLink && styles.linkLogin} href="">
-                  {name}
+                <a className={`${styles.menuLink} ${styles.linkLogin}`} href="">
+                  {userName}
                   <img
                     className={styles.login}
                     src="/public/svg/login.svg"
@@ -34,14 +36,21 @@ const Header = ({ onClick }) => {
                 </a>
               </li>
               <li className={styles.menuItem}>
-                <a className={styles.menuLink} href="" onClick={onClick}>
+                <a
+                  className={styles.menuLink}
+                  href=""
+                  onClick={(e) => {
+                    e.preventDefault();
+                    logoutCurrentUser();
+                  }}
+                >
                   Выйти
                 </a>
               </li>
             </>
           ) : (
             <li className={styles.menuItem}>
-              <a className={styles.menuLink && styles.linkLogin} href="">
+              <a className={`${styles.menuLink} ${styles.linkLogin}`} href="">
                 Войти
                 <img className={styles.login} src="login.svg" alt="login" />
               </a>
@@ -52,5 +61,3 @@ const Header = ({ onClick }) => {
     </div>
   );
 };
-
-export default Header;

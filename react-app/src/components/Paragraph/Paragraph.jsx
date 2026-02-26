@@ -1,7 +1,5 @@
 import styles from "./Paragraph.module.css";
 
-const Paragraph = ({ text }) => {
+export const Paragraph = ({ text }) => {
   return <p className={styles.paragraph}>{text}</p>;
 };
-
-export default Paragraph;

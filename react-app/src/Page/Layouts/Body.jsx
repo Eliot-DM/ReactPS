@@ -1,7 +1,7 @@
 import CardList from "../../components/CardList/CardList";
 import styles from "./Body.module.css";
 
-const Body = ({ data }) => {
+export const Body = ({ data }) => {
   return (
     <>
       <Heading title={"Поиск"}></Heading>
@@ -18,5 +18,3 @@ const Body = ({ data }) => {
     </>
   );
 };
-
-export default Body;

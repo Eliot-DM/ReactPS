@@ -1,7 +1,7 @@
-import Card from "../card/card";
+import Card from "../Card/Card";
 import styles from "./CardList.module.css";
 
-const CardList = ({ data }) => {
+export const CardList = ({ data }) => {
   return (
     <ul className={styles.cardList}>
       {data.map((el, i) => (
@@ -10,5 +10,3 @@ const CardList = ({ data }) => {
     </ul>
   );
 };
-
-export default CardList;

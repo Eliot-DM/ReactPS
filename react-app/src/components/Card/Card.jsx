@@ -1,6 +1,6 @@
 import styles from "./Card.module.css";
 
-const Card = ({ title, src, star }) => {
+export const Card = ({ title, src, star }) => {
   return (
     <li className={styles.card}>
       <div className={styles.star}>
@@ -19,5 +19,3 @@ const Card = ({ title, src, star }) => {
     </li>
   );
 };
-
-export default Card;

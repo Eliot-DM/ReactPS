@@ -1,7 +1,7 @@
 import styles from "./Button.module.css";
 import cn from "classnames";
 
-const Button = ({ text, big = false, onClick }) => {
+export const Button = ({ text, big = false, onClick }) => {
   return (
     <button
       className={cn(styles.button, { [styles.big]: big })}
@@ -11,5 +11,3 @@ const Button = ({ text, big = false, onClick }) => {
     </button>
   );
 };
-
-export default Button;

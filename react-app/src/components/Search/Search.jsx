@@ -1,7 +1,7 @@
 import styles from "./Search.module.css";
 import cn from "classnames";
 
-const Search = ({ placeholder, svg = false, onChange, value }) => {
+export const Search = ({ placeholder, svg = false, onChange, value }) => {
   return (
     <div className={styles.search}>
       {svg && (
@@ -19,5 +19,3 @@ const Search = ({ placeholder, svg = false, onChange, value }) => {
     </div>
   );
 };
-
-export default Search;
