@@ -1,6 +1,12 @@
 import styles from "./Card.module.css";
 
-export const Card = ({ title, src, star }) => {
+interface CardProps {
+  title: string;
+  src: string;
+  star: string;
+}
+
+export const Card = ({ title, src, star }: CardProps) => {
   return (
     <li className={styles.card}>
       <div className={styles.star}>

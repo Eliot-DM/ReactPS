@@ -16,7 +16,9 @@ export const App = () => {
         svg={false}
         onChange={(e) => setName(e.target.value)}
       />
-      <Button text={"Войти в профиль"} big onClick={saveName} />
+      <Button big onClick={saveName}>
+        Войти в профиль
+      </Button>
     </>
   );
 };

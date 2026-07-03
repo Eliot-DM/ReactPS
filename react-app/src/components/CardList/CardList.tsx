@@ -1,7 +1,17 @@
-import Card from "../Card/Card";
+import { Card } from "../Card/Card";
 import styles from "./CardList.module.css";
 
-export const CardList = ({ data }) => {
+interface CardListProps {
+  data: [
+    {
+      title: string;
+      src: string;
+      star: string;
+    },
+  ];
+}
+
+export const CardList = ({ data }: CardListProps) => {
   return (
     <ul className={styles.cardList}>
       {data.map((el, i) => (
