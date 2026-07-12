@@ -1,7 +1,7 @@
 import styles from "./Header.module.css";
 import { useContext } from "react";
 import { UserContext } from "../../context/user.context";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export const Header = () => {
   const { currentUser, logoutCurrentUser } = useContext(UserContext);
@@ -14,17 +14,17 @@ export const Header = () => {
       <nav className={styles.menu}>
         <ul className={styles.menuList}>
           <li className={styles.menuItem}>
-            <Link className={styles.menuLink} to="/">
+            <NavLink className={styles.menuLink} to="/">
               Поиск фильмов
-            </Link>
+            </NavLink>
             {/* <a className={styles.menuLink} href="">
               Поиск фильмов
             </a> */}
           </li>
           <li className={styles.menuItem}>
-            <Link className={styles.menuLink} to="/favorites">
+            <NavLink className={styles.menuLink} to="/favorites">
               Мои фильмы
-            </Link>
+            </NavLink>
             {/* <a className={styles.menuLink} href="">
               Мои фильмы
             </a> */}
@@ -33,7 +33,7 @@ export const Header = () => {
           {userName ? (
             <>
               <li className={styles.menuItem}>
-                <Link
+                <NavLink
                   className={`${styles.menuLink} ${styles.linkLogin}`}
                   to="/login"
                 >
@@ -43,7 +43,7 @@ export const Header = () => {
                     src="/public/svg/login.svg"
                     alt="login"
                   />
-                </Link>
+                </NavLink>
 
                 {/* <a className={`${styles.menuLink} ${styles.linkLogin}`} href="">
                   {userName}
@@ -55,7 +55,7 @@ export const Header = () => {
                 </a> */}
               </li>
               <li className={styles.menuItem}>
-                <Link
+                <NavLink
                   onClick={(e) => {
                     e.preventDefault();
                     logoutCurrentUser();
@@ -64,7 +64,7 @@ export const Header = () => {
                   to="/"
                 >
                   Выйти
-                </Link>
+                </NavLink>
 
                 {/* <a
                   className={styles.menuLink}
@@ -80,13 +80,13 @@ export const Header = () => {
             </>
           ) : (
             <li className={styles.menuItem}>
-              <Link
+              <NavLink
                 className={`${styles.menuLink} ${styles.linkLogin}`}
                 to="/login"
               >
                 Войти
                 <img className={styles.login} src="login.svg" alt="login" />
-              </Link>
+              </NavLink>
 
               {/* <a className={`${styles.menuLink} ${styles.linkLogin}`} href="">
                 Войти

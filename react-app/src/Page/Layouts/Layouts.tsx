@@ -11,7 +11,6 @@ export const Layouts = () => {
       <main className={styles.main}>
         <Outlet />
       </main>
-      Layouts
     </>
   );
 };
