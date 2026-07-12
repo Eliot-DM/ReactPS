@@ -1,7 +1,25 @@
-import { createContext } from "react";
-import { useState, useEffect } from "react";
+import { createContext, useState, useEffect, ReactNode, FC } from "react";
 
-export const UserContext = createContext({
+interface User {
+  name: string;
+  isLogined: boolean;
+}
+
+interface UserContextType {
+  user: User[];
+  name: string;
+  currentUser: User | null;
+  setName: (value: string) => void;
+  saveName: () => void;
+  logoutCurrentUser: () => void;
+}
+
+interface UserContextProviderProps {
+  children: ReactNode;
+}
+
+// Создаем контекст с правильным типом
+export const UserContext = createContext<UserContextType>({
   user: [],
   name: "",
   currentUser: null,
@@ -10,18 +28,24 @@ export const UserContext = createContext({
   logoutCurrentUser: () => {},
 });
 
-export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
-  const [name, setName] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
+export const UserContextProvider: FC<UserContextProviderProps> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<User[]>([]);
+  const [name, setName] = useState<string>("");
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
     const data = localStorage.getItem("data");
     if (data) {
-      const parsedData = JSON.parse(data);
-      setUser(parsedData);
-      const loggedUser = parsedData.find((u) => u.isLogined === true);
-      setCurrentUser(loggedUser || null);
+      try {
+        const parsedData: User[] = JSON.parse(data);
+        setUser(parsedData);
+        const loggedUser = parsedData.find((u) => u.isLogined === true);
+        setCurrentUser(loggedUser || null);
+      } catch (error) {
+        console.error("Error parsing user data from localStorage:", error);
+      }
     }
   }, []);
 
@@ -29,9 +53,12 @@ export const UserContextProvider = ({ children }) => {
     localStorage.setItem("data", JSON.stringify(user));
   }, [user]);
 
-  const saveName = () => {
-    if (name) {
-      const newUser = { name, isLogined: true };
+  const saveName = (): void => {
+    if (name.trim()) {
+      const newUser: User = {
+        name: name.trim(),
+        isLogined: true,
+      };
       const updatedUsers = [...user, newUser];
       setUser(updatedUsers);
       setCurrentUser(newUser);
@@ -39,19 +66,22 @@ export const UserContextProvider = ({ children }) => {
     }
   };
 
-  const logoutCurrentUser = () => {
+  const logoutCurrentUser = (): void => {
     if (currentUser) {
       const userIndex = user.findIndex((u) => u.name === currentUser.name);
       if (userIndex !== -1) {
         const updatedUsers = [...user];
-        updatedUsers[userIndex].isLogined = false;
+        updatedUsers[userIndex] = {
+          ...updatedUsers[userIndex],
+          isLogined: false,
+        };
         setUser(updatedUsers);
         setCurrentUser(null);
       }
     }
   };
 
-  const value = {
+  const value: UserContextType = {
     user,
     name,
     currentUser,
