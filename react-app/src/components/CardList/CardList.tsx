@@ -1,5 +1,7 @@
+import axios from "axios";
 import { Card } from "../Card/Card";
 import styles from "./CardList.module.css";
+import { PREFIX } from "../../helpers/API";
 
 interface CardListProps {
   data: [

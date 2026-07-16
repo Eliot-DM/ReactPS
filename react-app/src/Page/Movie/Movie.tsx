@@ -1,8 +1,15 @@
+import { useLoaderData, useParams } from "react-router-dom";
 import styles from "./Movie.module.css";
 
 interface MovieProps {}
 
 export const Movie = () => {
+  // const { id } = useParams();
+
+  const data = useLoaderData();
+
+  console.log(data);
+
   return (
     <>
       Movie
