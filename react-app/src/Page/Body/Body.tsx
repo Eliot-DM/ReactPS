@@ -12,12 +12,14 @@ interface BodyProps {
   data: [];
 }
 
-export const Body = ({ data }: BodyProps) => {
+export const Body = () => {
   const [movie, setMovie] = useState<BodyProps>();
- const [value, setValue] = useState<string>();
+
+  const [searchValue, setSearchValue] = useState("");
+
   const dataList = async () => {
     try {
-      const { data } = await axios.get<[]>(`${PREFIX}?q=${}`);
+      const { data } = await axios.get<[]>(`${PREFIX}?q=${searchValue}`);
       setMovie(data);
     } catch (e) {
       console.error(e);
@@ -40,8 +42,8 @@ export const Body = ({ data }: BodyProps) => {
       <Search
         placeholder={"Введите название"}
         svg={true}
-        onChange={undefined}
-        value={undefined}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
       />
       <div className={styles.body}>
         <CardList data={movie} />

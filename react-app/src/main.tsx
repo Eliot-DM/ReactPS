@@ -16,14 +16,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layouts />,
     children: [
-      { path: "/", element: <Body data={[]} /> },
+      { path: "/", element: <Body /> },
       { path: "/login", element: <Login /> },
       {
-        path: "/movie:id",
+        path: "/movie/:id",
         element: <Movie />,
         loader: async ({ params }) => {
           const data = await axios.get(`${PREFIX}${params.id}`);
-          return data;
+          return data.data;
         },
       },
       { path: "/favorites", element: <Favorites /> },
