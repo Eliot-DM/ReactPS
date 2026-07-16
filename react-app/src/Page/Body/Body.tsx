@@ -13,7 +13,7 @@ interface BodyProps {
 }
 
 export const Body = () => {
-  const [movie, setMovie] = useState<BodyProps>();
+  const [movie, setMovie] = useState<[]>();
 
   const [searchValue, setSearchValue] = useState("");
 

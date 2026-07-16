@@ -6,7 +6,7 @@ interface SearchProps extends InputHTMLAttributes<HTMLInputElement> {
   svg: boolean;
 }
 
-export const Search = ({ svg = false }: SearchProps) => {
+export const Search = ({ svg = false, value, onChange }: SearchProps) => {
   return (
     <div className={styles.search}>
       {svg && (
@@ -17,6 +17,8 @@ export const Search = ({ svg = false }: SearchProps) => {
           [styles.inputSearch]: svg,
         })}
         type="text"
+        value={value}
+        onChange={onChange}
       />
     </div>
   );

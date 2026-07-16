@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Card } from "../Card/Card";
 import styles from "./CardList.module.css";
-import { PREFIX } from "../../helpers/API";
 
 interface CardListProps {
   data: [
@@ -14,6 +13,10 @@ interface CardListProps {
 }
 
 export const CardList = ({ data }: CardListProps) => {
+  if (!data) {
+    return <>ничего не найдено</>;
+  }
+
   return (
     <ul className={styles.cardList}>
       {data.map((el, i) => (
