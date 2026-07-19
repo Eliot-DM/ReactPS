@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, ReactNode, FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   name: string;
@@ -34,6 +35,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
   const [user, setUser] = useState<User[]>([]);
   const [name, setName] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const data = localStorage.getItem("data");
@@ -43,6 +45,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         setUser(parsedData);
         const loggedUser = parsedData.find((u) => u.isLogined === true);
         setCurrentUser(loggedUser || null);
+        navigate("/");
       } catch (error) {
         console.error("Error parsing user data from localStorage:", error);
       }

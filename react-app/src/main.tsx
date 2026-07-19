@@ -1,32 +1,63 @@
-import { StrictMode } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { UserContextProvider } from "./context/user.context";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Body } from "./Page/Body/Body";
-import { Login } from "./Page/Login/Login";
-import { Movie } from "./Page/Movie/Movie";
-import { Favorites } from "./Page/Favorites/Favorites";
 import { Layouts } from "./Page/Layouts/Layouts";
 import axios from "axios";
 import { PREFIX } from "./helpers/API";
+import { RequireAuth } from "./helpers/RequireAuth";
+
+const Body = lazy(() => import("./Page/Body/Body"));
+const Login = lazy(() => import("./Page/Login/Login"));
+const Movie = lazy(() => import("./Page/Movie/Movie"));
+const Favorites = lazy(() => import("./Page/Favorites/Favorites"));
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layouts />,
+    element: (
+      <RequireAuth>
+        <Layouts />
+      </RequireAuth>
+    ),
     children: [
-      { path: "/", element: <Body /> },
-      { path: "/login", element: <Login /> },
+      {
+        path: "/",
+        element: (
+          <Suspense fallback={<div>Загрузка...</div>}>
+            <Body />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/login",
+        element: (
+          <Suspense fallback={<div>Загрузка...</div>}>
+            <Login />
+          </Suspense>
+        ),
+      },
       {
         path: "/movie/:id",
-        element: <Movie />,
+        element: (
+          <Suspense fallback={<div>Загрузка...</div>}>
+            <Movie />
+          </Suspense>
+        ),
         loader: async ({ params }) => {
           const data = await axios.get(`${PREFIX}${params.id}`);
           return data.data;
         },
       },
-      { path: "/favorites", element: <Favorites /> },
+      {
+        path: "/favorites",
+        element: (
+          <Suspense fallback={<div>Загрузка...</div>}>
+            <Favorites />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);

@@ -5,3 +5,5 @@ interface FavoritesProps {}
 export const Favorites = () => {
   return <>Favorites</>;
 };
+
+export default Favorites;

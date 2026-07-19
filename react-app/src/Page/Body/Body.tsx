@@ -27,9 +27,9 @@ export const Body = () => {
     }
   };
 
-  useEffect(() => {
-    dataList();
-  });
+  // useEffect(() => {
+  //   dataList();
+  // });
 
   return (
     <>
@@ -51,3 +51,5 @@ export const Body = () => {
     </>
   );
 };
+
+export default Body;

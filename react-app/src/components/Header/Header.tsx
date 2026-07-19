@@ -1,13 +1,17 @@
 import styles from "./Header.module.css";
 import { useContext } from "react";
 import { UserContext } from "../../context/user.context";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const { currentUser, logoutCurrentUser } = useContext(UserContext);
 
   const userName = currentUser?.name;
-
+  // const navigate = useNavigate();
+  const logaut = () => {
+    localStorage.removeItem("data");
+    // navigate("/");
+  };
   return (
     <div className={styles.header}>
       <img className={styles.logo} src="/public/svg/logo.svg" alt="logo" />
