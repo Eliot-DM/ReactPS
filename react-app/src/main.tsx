@@ -7,6 +7,8 @@ import { Layouts } from "./Page/Layouts/Layouts";
 import axios from "axios";
 import { PREFIX } from "./helpers/API";
 import { RequireAuth } from "./helpers/RequireAuth";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 const Body = lazy(() => import("./Page/Body/Body"));
 const Login = lazy(() => import("./Page/Login/Login"));
@@ -65,7 +67,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UserContextProvider>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </UserContextProvider>
   </StrictMode>,
 );

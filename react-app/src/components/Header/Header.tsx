@@ -1,17 +1,13 @@
 import styles from "./Header.module.css";
 import { useContext } from "react";
 import { UserContext } from "../../context/user.context";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const Header = () => {
   const { currentUser, logoutCurrentUser } = useContext(UserContext);
 
   const userName = currentUser?.name;
-  // const navigate = useNavigate();
-  const logaut = () => {
-    localStorage.removeItem("data");
-    // navigate("/");
-  };
+
   return (
     <div className={styles.header}>
       <img className={styles.logo} src="/public/svg/logo.svg" alt="logo" />
@@ -21,19 +17,12 @@ export const Header = () => {
             <NavLink className={styles.menuLink} to="/">
               Поиск фильмов
             </NavLink>
-            {/* <a className={styles.menuLink} href="">
-              Поиск фильмов
-            </a> */}
           </li>
           <li className={styles.menuItem}>
             <NavLink className={styles.menuLink} to="/favorites">
               Мои фильмы
             </NavLink>
-            {/* <a className={styles.menuLink} href="">
-              Мои фильмы
-            </a> */}
           </li>
-
           {userName ? (
             <>
               <li className={styles.menuItem}>
@@ -48,15 +37,6 @@ export const Header = () => {
                     alt="login"
                   />
                 </NavLink>
-
-                {/* <a className={`${styles.menuLink} ${styles.linkLogin}`} href="">
-                  {userName}
-                  <img
-                    className={styles.login}
-                    src="/public/svg/login.svg"
-                    alt="login"
-                  />
-                </a> */}
               </li>
               <li className={styles.menuItem}>
                 <NavLink
@@ -69,17 +49,6 @@ export const Header = () => {
                 >
                   Выйти
                 </NavLink>
-
-                {/* <a
-                  className={styles.menuLink}
-                  href=""
-                  onClick={(e) => {
-                    e.preventDefault();
-                    logoutCurrentUser();
-                  }}
-                >
-                  Выйти
-                </a> */}
               </li>
             </>
           ) : (
@@ -91,11 +60,6 @@ export const Header = () => {
                 Войти
                 <img className={styles.login} src="login.svg" alt="login" />
               </NavLink>
-
-              {/* <a className={`${styles.menuLink} ${styles.linkLogin}`} href="">
-                Войти
-                <img className={styles.login} src="login.svg" alt="login" />
-              </a> */}
             </li>
           )}
         </ul>
