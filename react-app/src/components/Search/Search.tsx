@@ -1,24 +1,22 @@
-import { InputHTMLAttributes } from "react";
 import styles from "./Search.module.css";
-import cn from "classnames";
 
-interface SearchProps extends InputHTMLAttributes<HTMLInputElement> {
+interface SearchProps {
+  value: string;
+  placeholder: string;
   svg: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Search = ({ svg = false, value, onChange }: SearchProps) => {
+export const Search = ({ value, placeholder, svg, onChange }: SearchProps) => {
   return (
     <div className={styles.search}>
-      {svg && (
-        <img className={styles.svg} src="/public/svg/search.svg" alt="" />
-      )}
+      {svg && <img src="/search.svg" alt="search" />}
       <input
-        className={cn(styles.input, {
-          [styles.inputSearch]: svg,
-        })}
         type="text"
         value={value}
+        placeholder={placeholder}
         onChange={onChange}
+        className={styles.input}
       />
     </div>
   );

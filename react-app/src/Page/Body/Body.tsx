@@ -6,30 +6,41 @@ import { Search } from "../../components/Search/Search";
 import axios from "axios";
 import styles from "./Body.module.css";
 import { PREFIX } from "../../helpers/API";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
-interface BodyProps {
-  data: [];
+interface Movie {
+  // Добавьте правильную типизацию для фильмов
+  id: string;
+  title: string;
+  description?: string;
+  // ... другие поля
 }
 
 export const Body = () => {
-  const [movie, setMovie] = useState<[]>();
-
+  const [movie, setMovie] = useState<Movie[]>([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const dataList = async () => {
+  const dataList = useCallback(async () => {
     try {
-      const { data } = await axios.get<[]>(`${PREFIX}?q=${searchValue}`);
+      const { data } = await axios.get<Movie[]>(`${PREFIX}?q=${searchValue}`);
       setMovie(data);
     } catch (e) {
       console.error(e);
-      return;
+      setMovie([]);
     }
-  };
+  }, [searchValue]); // Добавляем searchValue в зависимости
 
   useEffect(() => {
-    dataList();
-  });
+    if (searchValue) {
+      dataList();
+    }
+  }, [searchValue, dataList]); // Запускаем только при изменении searchValue
+
+  const handleSearch = () => {
+    if (searchValue.trim()) {
+      dataList();
+    }
+  };
 
   return (
     <>
@@ -38,13 +49,15 @@ export const Body = () => {
         Введите название фильма, сериала или мультфильма для поиска и добавления
         в избранное.
       </Paragraph>
-      <Button big>Искать</Button>
       <Search
         placeholder={"Введите название"}
         svg={true}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       />
+      <Button big onClick={handleSearch}>
+        Искать
+      </Button>
       <div className={styles.body}>
         <CardList data={movie} />
       </div>

@@ -1,11 +1,11 @@
-// store.ts или где вы конфигурируете store
 import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./user.slice";
 import favoritesReducer, { favoritesMiddleware } from "./favorites.slice";
 
 export const store = configureStore({
   reducer: {
+    user: userReducer,
     favorites: favoritesReducer,
-    // ... другие редюсеры
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(favoritesMiddleware),

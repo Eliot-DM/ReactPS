@@ -1,17 +1,22 @@
 import styles from "./Header.module.css";
-import { useContext } from "react";
-import { UserContext } from "../../context/user.context";
 import { NavLink } from "react-router-dom";
 import { RootState } from "../../store/store";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutCurrentUser } from "../../store/user.slice";
 
 export const Header = () => {
-  const { currentUser, logoutCurrentUser } = useContext(UserContext);
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const favoriteMovies = useSelector(
     (state: RootState) => state.favorites.favorite,
   );
 
   const userName = currentUser?.name;
+
+  const handleLogout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    dispatch(logoutCurrentUser());
+  };
 
   return (
     <div className={styles.header}>
@@ -25,7 +30,8 @@ export const Header = () => {
           </li>
           <li className={styles.menuItem}>
             <NavLink className={styles.menuLink} to="/favorites">
-              Мои фильмы{favoriteMovies.length}
+              Мои фильмы{" "}
+              {favoriteMovies.length > 0 && `(${favoriteMovies.length})`}
             </NavLink>
           </li>
           {userName ? (
@@ -44,16 +50,9 @@ export const Header = () => {
                 </NavLink>
               </li>
               <li className={styles.menuItem}>
-                <NavLink
-                  onClick={(e) => {
-                    e.preventDefault();
-                    logoutCurrentUser();
-                  }}
-                  className={styles.menuLink}
-                  to="/"
-                >
+                <a onClick={handleLogout} className={styles.menuLink} href="/">
                   Выйти
-                </NavLink>
+                </a>
               </li>
             </>
           ) : (

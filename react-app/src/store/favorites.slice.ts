@@ -8,17 +8,18 @@ export interface Movie {
 
 interface MovieList {
   favorite: Movie[];
-  currentUser: string | null; // Добавляем поле для отслеживания текущего пользователя
+  currentUser: string | null;
 }
 
-// Функция для загрузки избранного из localStorage
-const loadFavoritesFromStorage = (): Movie[] => {
+// Загрузка избранного для конкретного пользователя
+const loadFavoritesForUser = (username: string | null): Movie[] => {
+  if (!username) return [];
+
   try {
     const storedFavorites = localStorage.getItem("favorites");
     if (storedFavorites) {
       const allFavorites = JSON.parse(storedFavorites);
-      // Возвращаем избранное для всех пользователей
-      return allFavorites;
+      return allFavorites[username] || [];
     }
   } catch (error) {
     console.error("Error loading favorites from localStorage:", error);
@@ -26,42 +27,36 @@ const loadFavoritesFromStorage = (): Movie[] => {
   return [];
 };
 
-// Функция для сохранения избранного в localStorage
-const saveFavoritesToStorage = (
-  favorites: Movie[],
-  username: string | null,
-) => {
+// Сохранение избранного для конкретного пользователя
+const saveFavoritesForUser = (username: string, favorites: Movie[]) => {
   try {
-    if (username) {
-      const storedFavorites = localStorage.getItem("favorites");
-      let allFavorites: Record<string, Movie[]> = {};
+    const storedFavorites = localStorage.getItem("favorites");
+    let allFavorites: Record<string, Movie[]> = {};
 
-      if (storedFavorites) {
-        allFavorites = JSON.parse(storedFavorites);
-      }
-
-      // Сохраняем избранное для конкретного пользователя
-      allFavorites[username] = favorites;
-      localStorage.setItem("favorites", JSON.stringify(allFavorites));
+    if (storedFavorites) {
+      allFavorites = JSON.parse(storedFavorites);
     }
+
+    allFavorites[username] = favorites;
+    localStorage.setItem("favorites", JSON.stringify(allFavorites));
   } catch (error) {
     console.error("Error saving favorites to localStorage:", error);
   }
 };
 
-// Middleware для автоматической синхронизации с localStorage
+// Middleware для автоматической синхронизации
 export const favoritesMiddleware =
   (store: any) => (next: any) => (action: any) => {
     const result = next(action);
 
-    // Проверяем, что действие относится к favorites слайсу
     if (
       action.type?.startsWith("favorites/") &&
-      action.type !== "favorites/setCurrentUser"
+      action.type !== "favorites/setCurrentUser" &&
+      action.type !== "favorites/syncWithUser"
     ) {
       const state = store.getState().favorites;
       if (state.currentUser) {
-        saveFavoritesToStorage(state.favorite, state.currentUser);
+        saveFavoritesForUser(state.currentUser, state.favorite);
       }
     }
 
@@ -81,7 +76,6 @@ export const favoritesSlice = createSlice({
       const isExists = state.favorite.some(
         (movie) => movie.title === action.payload.title,
       );
-
       if (!isExists) {
         state.favorite.push(action.payload);
       }
@@ -97,7 +91,6 @@ export const favoritesSlice = createSlice({
       const index = state.favorite.findIndex(
         (movie) => movie.title === action.payload.title,
       );
-
       if (index === -1) {
         state.favorite.push(action.payload);
       } else {
@@ -105,42 +98,25 @@ export const favoritesSlice = createSlice({
       }
     },
 
-    // Новый action для установки текущего пользователя и загрузки его избранного
-    setCurrentUser: (state, action: PayloadAction<string | null>) => {
-      const newUsername = action.payload;
+    // Синхронизация с текущим пользователем
+    syncWithUser: (state, action: PayloadAction<string | null>) => {
+      const username = action.payload;
 
-      // Сохраняем текущее избранное перед сменой пользователя
+      // Сохраняем текущие favorites перед сменой пользователя
       if (state.currentUser) {
-        const storedFavorites = localStorage.getItem("favorites");
-        let allFavorites: Record<string, Movie[]> = {};
-
-        if (storedFavorites) {
-          allFavorites = JSON.parse(storedFavorites);
-        }
-
-        allFavorites[state.currentUser] = state.favorite;
-        localStorage.setItem("favorites", JSON.stringify(allFavorites));
+        saveFavoritesForUser(state.currentUser, state.favorite);
       }
 
-      // Устанавливаем нового пользователя
-      state.currentUser = newUsername;
-
-      // Загружаем избранное нового пользователя
-      if (newUsername) {
-        const storedFavorites = localStorage.getItem("favorites");
-        if (storedFavorites) {
-          const allFavorites = JSON.parse(storedFavorites);
-          state.favorite = allFavorites[newUsername] || [];
-        } else {
-          state.favorite = [];
-        }
-      } else {
-        state.favorite = [];
-      }
+      // Обновляем пользователя и загружаем его favorites
+      state.currentUser = username;
+      state.favorite = loadFavoritesForUser(username);
     },
 
-    // Очистка избранного при выходе пользователя
+    // Очистка при выходе
     clearFavorites: (state) => {
+      if (state.currentUser) {
+        saveFavoritesForUser(state.currentUser, state.favorite);
+      }
       state.favorite = [];
       state.currentUser = null;
     },
@@ -151,7 +127,8 @@ export const {
   addFavorite,
   deleteFavorite,
   toggleFavorite,
-  setCurrentUser,
+  syncWithUser,
   clearFavorites,
 } = favoritesSlice.actions;
+
 export default favoritesSlice.reducer;
