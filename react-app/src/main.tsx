@@ -48,8 +48,13 @@ const router = createBrowserRouter([
           </Suspense>
         ),
         loader: async ({ params }) => {
-          const data = await axios.get(`${PREFIX}${params.id}`);
-          return data.data;
+          try {
+            const response = await axios.get(`${PREFIX}${params.id}`);
+            return response.data;
+          } catch (error) {
+            console.error("Error loading movie:", error);
+            throw new Response("Фильм не найден", { status: 404 });
+          }
         },
       },
       {
