@@ -71,10 +71,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <UserContextProvider>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    </UserContextProvider>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 );
