@@ -27,9 +27,9 @@ export const Body = () => {
     }
   };
 
-  // useEffect(() => {
-  //   dataList();
-  // });
+  useEffect(() => {
+    dataList();
+  });
 
   return (
     <>

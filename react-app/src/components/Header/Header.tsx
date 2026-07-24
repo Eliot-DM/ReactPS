@@ -2,9 +2,14 @@ import styles from "./Header.module.css";
 import { useContext } from "react";
 import { UserContext } from "../../context/user.context";
 import { NavLink } from "react-router-dom";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
   const { currentUser, logoutCurrentUser } = useContext(UserContext);
+  const favoriteMovies = useSelector(
+    (state: RootState) => state.favorites.favorite,
+  );
 
   const userName = currentUser?.name;
 
@@ -20,7 +25,7 @@ export const Header = () => {
           </li>
           <li className={styles.menuItem}>
             <NavLink className={styles.menuLink} to="/favorites">
-              Мои фильмы
+              Мои фильмы{favoriteMovies.length}
             </NavLink>
           </li>
           {userName ? (

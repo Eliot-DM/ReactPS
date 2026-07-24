@@ -1,10 +1,14 @@
+// store.ts или где вы конфигурируете store
 import { configureStore } from "@reduxjs/toolkit";
-import favoritesReducer from "./favorites.slice";
+import favoritesReducer, { favoritesMiddleware } from "./favorites.slice";
 
 export const store = configureStore({
   reducer: {
     favorites: favoritesReducer,
+    // ... другие редюсеры
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(favoritesMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

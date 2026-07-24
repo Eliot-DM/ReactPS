@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect, ReactNode, FC } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../store/favorites.slice"; // Импортируем action
 
 interface User {
   name: string;
@@ -19,7 +21,6 @@ interface UserContextProviderProps {
   children: ReactNode;
 }
 
-// Создаем контекст с правильным типом
 export const UserContext = createContext<UserContextType>({
   user: [],
   name: "",
@@ -34,8 +35,9 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 }) => {
   const [user, setUser] = useState<User[]>([]);
   const [name, setName] = useState<string>("");
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUserState] = useState<User | null>(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const data = localStorage.getItem("data");
@@ -44,8 +46,14 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
         const parsedData: User[] = JSON.parse(data);
         setUser(parsedData);
         const loggedUser = parsedData.find((u) => u.isLogined === true);
-        setCurrentUser(loggedUser || null);
-        navigate("/");
+        setCurrentUserState(loggedUser || null);
+
+        // Синхронизируем пользователя с Redux store
+        dispatch(setCurrentUser(loggedUser ? loggedUser.name : null));
+
+        if (loggedUser) {
+          navigate("/");
+        }
       } catch (error) {
         console.error("Error parsing user data from localStorage:", error);
       }
@@ -64,7 +72,11 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
       };
       const updatedUsers = [...user, newUser];
       setUser(updatedUsers);
-      setCurrentUser(newUser);
+      setCurrentUserState(newUser);
+
+      // Синхронизируем пользователя с Redux store
+      dispatch(setCurrentUser(newUser.name));
+
       setName("");
     }
   };
@@ -79,7 +91,10 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
           isLogined: false,
         };
         setUser(updatedUsers);
-        setCurrentUser(null);
+        setCurrentUserState(null);
+
+        // Очищаем данные пользователя в Redux store
+        dispatch(setCurrentUser(null));
       }
     }
   };
