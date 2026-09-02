@@ -1,0 +1,31 @@
+.input {
+  padding: 12px 16px;
+  width: 350px;
+  height: 40px;
+  background-color: rgba(0, 255, 255, 0);
+  border-radius: 12px;
+  border: 1px solid #323b54;
+  color: #c2c8d7;
+}
+
+.input::placeholder {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #475069;
+}
+
+.svg {
+  top: 20px;
+  left: 16px;
+  position: absolute;
+}
+
+.search {
+  position: relative;
+}
+
+.inputSearch {
+  padding-left: 55px;
+}

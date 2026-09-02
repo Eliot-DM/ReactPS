@@ -1,0 +1,41 @@
+.block_top {
+  padding: 40px;
+}
+
+.star {
+  margin: 8px;
+  padding: 4px 8px;
+  display: flex;
+  position: absolute;
+  background: #000000a6;
+  border-radius: 12px;
+}
+
+.star_text {
+  margin: 0;
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffad49;
+}
+
+.block_link {
+  display: flex;
+}
+
+.star_svg {
+  padding-right: 4px;
+}
+
+.like_svg {
+  margin-right: 8px;
+}
+
+.link {
+  font-family: Poppins;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7b6ef6;
+}
